@@ -97,12 +97,37 @@ class RomanTest {
                 }
             }
 
-    @TestFactory
-    fun `non valid greater then 100`()  = listOf(
-            "CLC" to false,
-            "CLVX" to false
-    ).map { (input, expected) -> DynamicTest.dynamicTest("$input is not a valid roman number") {
-        expect(isRomanNumber(input)).toBe(expected)
-    } }
 
+    @TestFactory
+    fun `non valid every 50 chars`()  = listOf(
+            "IXI" to false,     // 10 - should be X
+            "XLX" to false,     // 50 - should be L
+            "XCX" to false,     // 100 - should be C
+            "CXLX" to false,    // 150 - should be CL
+            "CXCX" to false,    // 200 - should be CC
+            "CCXLX" to false,   // 250 - should be CCL
+            "CCXCX" to false,   // 300 - should be CCC
+            "CCCXLX" to false   // 350 - should be CCCL
+    ).map { (input, expected) ->
+        DynamicTest.dynamicTest("$input is not a valid roman number") {
+            expect(isRomanNumber(input)).toBe(expected)
+        }
+    }
+
+    @TestFactory
+    fun `some random non valid greater then 100`()  = listOf(
+            "CVV" to false,
+            "CXLX" to false,
+            "CLC" to false,
+            "CLVX" to false,
+            "CXLIIX" to false,
+            "CLL" to false,
+            "CXCL" to false,
+            "CXCC" to false,
+            "CXIL" to false
+    ).map { (input, expected) ->
+        DynamicTest.dynamicTest("$input is not a valid roman number") {
+            expect(isRomanNumber(input)).toBe(expected)
+        }
+    }
 }
